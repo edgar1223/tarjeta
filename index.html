@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Felicitación de Cumpleaños - Shadowhunters</title>
+    <style>
+        @font-face {
+            font-family: 'Shadowhunters';
+            src: url('https://example.com/fonts/Shadowhunters.ttf') format('truetype');
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #2c3e50, #4ca1af);
+            background-size: cover;
+            background-blend-mode: overlay;
+            font-family: 'Shadowhunters', 'Arial', sans-serif;
+            color: #ecf0f1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            z-index: 0;
+            opacity: 0.1; /* Controlar la opacidad para que no opaque demasiado */
+        }
+
+        .card {
+            background-color: rgba(52, 73, 94, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.5s;
+            width: 80%;
+            max-width: 500px;
+            opacity: 0;
+            transform: scale(0.5);
+            z-index: 1;
+            position: relative;
+        }
+
+        .card-content {
+            display: none;
+        }
+
+        .card h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .card img.profile-image {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card p {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .quote {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        .rune {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            fill: rgba(255, 255, 255, 0.1);
+            z-index: 0;
+        }
+
+        button {
+            background-color: #27ae60;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+            transform: scale(1.1);
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particle-animation 30s linear forwards;
+        }
+
+        @keyframes particle-animation {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(0);
+            }
+        }
+
+        /* Nueva animación para Magnus Bane */
+        @keyframes magnus-bane-animation {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 10px #e74c3c, 0 0 20px #e74c3c, 0 0 30px #e74c3c;
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(1.5);
+                box-shadow: 0 0 20px #8e44ad, 0 0 30px #8e44ad, 0 0 40px #8e44ad;
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+                box-shadow: 0 0 30px #3498db, 0 0 40px #3498db, 0 0 50px #3498db;
+            }
+        }
+
+        .magnus-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin: -50px 0 0 -50px;
+            background: radial-gradient(circle, #e74c3c, #8e44ad, #3498db);
+            border-radius: 50%;
+            animation: magnus-bane-animation 2s forwards;
+            z-index: 2;
+        }
+
+        /* Estilo para referencias visuales a Magnus Bane */
+        .magnus-header {
+            font-family: 'Shadowhunters', 'Arial', sans-serif;
+            font-size: 3em;
+            color: #3498db;
+            text-shadow: 0 0 10px #8e44ad, 0 0 20px #e74c3c;
+            margin-bottom: 10px;
+        }
+
+        .magnus-quote {
+            font-style: italic;
+            font-size: 1.5em;
+            color: #9b59b6;
+            text-shadow: 0 0 5px #8e44ad;
+        }
+
+        .shadowhunters-rune {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        /* Añadir más runas alrededor del cuerpo */
+        .shadowhunters-rune.rune1 { top: 10%; left: 20%; }
+        .shadowhunters-rune.rune2 { top: 30%; left: 80%; }
+        .shadowhunters-rune.rune3 { top: 50%; left: 10%; }
+        .shadowhunters-rune.rune4 { top: 70%; left: 60%; }
+        .shadowhunters-rune.rune5 { top: 90%; left: 30%; }
+        
+        /* Añadir animación de partículas de runas */
+        .rune-particle {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            animation: rune-particle-animation 20s linear infinite;
+        }
+
+        @keyframes rune-particle-animation {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="Runa_Parabatai.webp" alt="Runa Parabatai" class="background-image">
+    <!-- Añadir runas de Shadowhunters al cuerpo -->
+    <img src="runa1.webp" alt="Runa 1" class="shadowhunters-rune rune1">
+    <img src="runa2.webp" alt="Runa 2" class="shadowhunters-rune rune2">
+    <img src="runa3.webp" alt="Runa 3" class="shadowhunters-rune rune3">
+    <img src="runa4.webp" alt="Runa 4" class="shadowhunters-rune rune4">
+    <img src="runa5.webp" alt="Runa 5" class="shadowhunters-rune rune5">
+    
+    <div class="card">
+        <div class="card-content">
+            <h1 class="magnus-header">¡Feliz Cumpleaños!</h1>
+            <img src="foto.png" alt="Perfil" class="profile-image">
+            <p>Que todos tus sueños se hagan realidad en este día especial.</p>
+            <p>Recuerda, siempre estamos protegidos por las runas y la fuerza de nuestra alianza. ¡Adelante, guerrero!</p>
+            <p class="magnus-quote">"El poder de las runas es eterno, así como nuestro legado."</p>
+        </div>
+        <button id="open-button">Abrir Tarjeta</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.card');
+            const button = document.getElementById('open-button');
+            const cardContent = document.querySelector('.card-content');
+
+            button.addEventListener('click', function() {
+                // Crear efecto de Magnus Bane
+                const magnusEffect = document.createElement('div');
+                magnusEffect.setAttribute('class', 'magnus-effect');
+                document.body.appendChild(magnusEffect);
+
+                // Esperar a que termine la animación
+                magnusEffect.addEventListener('animationend', () => {
+                    magnusEffect.remove();
+                    cardContent.style.display = 'block';
+                    button.style.display = 'none';
+                    generateRunes();
+                    generateParticles();
+                });
+            });
+
+            // Añadir animación inicial
+            setTimeout(() => {
+                card.style.opacity = 1;
+                card.style.transform = 'scale(1)';
+            }, 500);
+
+            function generateRunes() {
+                for (let i = 0; i < 30; i++) { // Aumenté a 30 runas
+                    const rune = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                    rune.setAttribute("class", "rune");
+                    rune.setAttribute("viewBox", "0 0 100 100");
+                    rune.style.top = `${Math.random() * 100}%`;
+                    rune.style.left = `${Math.random() * 100}%`;
+                    rune.innerHTML = createRandomRune();
+                    document.body.appendChild(rune);
+                }
+            }
+
+            function createRandomRune() {
+                const paths = [
+                    'M10,10 L90,90', // Línea diagonal
+                    'M50,10 L50,90', // Línea vertical
+                    'M10,50 L90,50', // Línea horizontal
+                    'M10,10 Q50,90 90,10', // Curva
+                    'M10,90 Q50,10 90,90', // Curva invertida
+                    'M50,10 C20,40 80,60 50,90', // Bezier
+                    'M10,10 C90,10 10,90 90,90' // Bezier complejo
+                ];
+
+                const pathData = [];
+                for (let i = 0; i < 3; i++) {
+                    pathData.push(paths[Math.floor(Math.random() * paths.length)]);
+                }
+
+                return `<path d="${pathData.join(' ')}" stroke="white" stroke-width="5" fill="none"/>`;
+            }
+
+            function generateParticles() {
+                const colors = ['#e74c3c', '#8e44ad', '#3498db', '#f1c40f', '#1abc9c', '#2ecc71'];
+                for (let i = 0; i < 50; i++) {
+                    const particle = document.createElement('div');
+                    particle.setAttribute('class', 'rune-particle');
+                    particle.style.top = `${Math.random() * 100}vh`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDelay = `${Math.random() * 30}s`;
+                    document.body.appendChild(particle);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
